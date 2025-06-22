@@ -1,15 +1,12 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    {# Check if a post object is available in the context #}
     {% if post %}
         <article class="bg-white p-8 rounded-lg shadow-xl max-w-3xl mx-auto">
-            {# Post Title #}
             <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-800 mb-6 leading-tight">
                 {{ post.title }}
             </h1>
 
-            {# Post Meta (Published Date and Author) #}
             <p class="text-lg text-gray-600 mb-8 border-b border-gray-200 pb-4">
                 Published:
                 <time datetime="{{ post.published_date|date:'Y-m-d H:i' }}" class="font-semibold text-gray-700">
@@ -20,14 +17,25 @@
                 {% endif %}
             </p>
 
-            {# Post Content - Apply linebreaksbr filter for proper formatting #}
             <div class="prose prose-lg max-w-none text-gray-800 leading-relaxed">
-                {# The |linebreaksbr filter converts newlines to <br> tags or <p> tags #}
                 {{ post.text|linebreaksbr }}
             </div>
 
-            {# Optional: Add a link back to the post list #}
-            <div class="mt-10 text-center">
+            {# Edit button - now conditional based on user authentication #}
+            {% if user.is_authenticated %}
+                <aside class="actions mt-10 flex justify-end">
+                    <a class="inline-flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-3 rounded-md shadow-md
+                              transform transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-75"
+                       href="{% url 'post_edit' pk=post.pk %}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.232z"></path>
+                        </svg>
+                    </a>
+                </aside>
+            {% endif %}
+
+            {# Original "Back to all posts" button #}
+            <div class="mt-4 flex justify-center">
                 <a href="{% url 'post_list' %}"
                    class="inline-flex items-center bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-6 rounded-md shadow-lg
                           transform transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none
@@ -40,7 +48,6 @@
             </div>
         </article>
     {% else %}
-        {# Message if no post is found (e.g., if invalid PK is provided) #}
         <div class="bg-white p-6 rounded-lg shadow-lg text-center text-gray-600 max-w-xl mx-auto">
             <p class="text-2xl font-bold mb-4">Post not found</p>
             <p>The blog post you are looking for does not exist or has been removed.</p>
