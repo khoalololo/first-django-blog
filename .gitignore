@@ -1,0 +1,48 @@
+# Python
+*.pyc
+*~
+__pycache__
+*.egg-info/ # For Python packaging artifacts
+build/      # For Python packaging artifacts
+dist/       # For Python packaging artifacts
+
+# Env
+.env
+myvenv/
+venv/
+
+# Database
+db.sqlite3
+# For PostgreSQL specific logs or data if they end up in the project dir
+*.sql
+*.log
+
+# User-uploaded media files (critical for Django projects!)
+/media/
+
+# Static folder at project root (already there, just reaffirming placement)
+/static/
+
+# IDE Specific (PyCharm - THIS IS IMPORTANT!)
+.idea/ # PyCharm project files (local configurations, run history, etc.)
+
+# macOS
+._*
+.DS_Store
+.fseventsd
+.Spotlight-V100
+
+# Windows
+Thumbs.db*
+ehthumbs*.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Visual Studio (VS Code)
+.vscode/
+.history/
+*.code-workspace
+
+# Other common temporary files
+*.swp   # Vim swap files
+*.bak   # Generic backup files
